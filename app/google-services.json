@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "844446858246",
+    "firebase_url": "https://bookmarkinaja-55d85.firebaseio.com",
+    "project_id": "bookmarkinaja-55d85",
+    "storage_bucket": "bookmarkinaja-55d85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844446858246:android:20c6c6eb55135d8efc5787",
+        "android_client_info": {
+          "package_name": "com.example.bookmarkinaja"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "844446858246-lu42l7vkqbfbgcqqe04s151aumkh6250.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bookmarkinaja",
+            "certificate_hash": "251cde3b782dbcae258a0d7a1aa0ce6a661853ab"
+          }
+        },
+        {
+          "client_id": "844446858246-ugm60lkqe7h8s11ob4avjq06o34mt9hp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHYTcBXiX98IkU6SfTJaOlhDpgtPm5wKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "844446858246-ugm60lkqe7h8s11ob4avjq06o34mt9hp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
