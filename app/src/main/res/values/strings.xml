@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">BookMarkInAja</string>
+    <array name="Jenis">
+        <item>Matematika</item>
+        <item>Fisika</item>
+        <item>Kimia</item>
+        <item>Bahasa Indonesia</item>
+        <item>Sejarah</item>
+    </array>
 </resources>

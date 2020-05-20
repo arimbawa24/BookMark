@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "844446858246-h8msp5rfppjrhid8khfgq7ci1029e8h8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bookmarkinaja",
+            "certificate_hash": "87065d7ead0948f87b63c675c348da1094a9a392"
+          }
+        },
+        {
           "client_id": "844446858246-lu42l7vkqbfbgcqqe04s151aumkh6250.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
