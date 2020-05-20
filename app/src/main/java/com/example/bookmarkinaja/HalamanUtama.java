@@ -42,7 +42,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
-
+import java.util.UUID;
 
 
 public class HalamanUtama extends AppCompatActivity {
@@ -56,9 +56,11 @@ public class HalamanUtama extends AppCompatActivity {
 
     ImageView imgview;
     Uri FilePathUri;
+    FirebaseStorage storage;
     StorageReference storageReference;
     DatabaseReference databaseReference;
     int Image_Request_Code = 7;
+    private final int PICK_IMAGE_REQUEST = 71;
     ProgressDialog progressDialog ;
     Button btnbrowse, btnupload;
 
@@ -69,7 +71,8 @@ public class HalamanUtama extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_halaman_utama);
 
-        storageReference = FirebaseStorage.getInstance().getReference("Images");
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         btnbrowse = (Button)findViewById(R.id.btnbrowse);
         btnupload= (Button)findViewById(R.id.btnupload);
@@ -87,19 +90,16 @@ public class HalamanUtama extends AppCompatActivity {
           btnbrowse.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  Intent intent = new Intent();
-                  intent.setType("image/*");
-                  intent.setAction(Intent.ACTION_GET_CONTENT);
-                  startActivityForResult(Intent.createChooser(intent, "Select Image"), Image_Request_Code);
-              }
-          });
+                  pilihGambar();
+    }
+});
+        btnupload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UploadImage();
+            }
+        });
 
-          btnupload.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  UploadImage();
-              }
-          });
 
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +110,29 @@ public class HalamanUtama extends AppCompatActivity {
         });
     }
 
+    private void pilihGambar(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode,data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData()!=null){
+            FilePathUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),FilePathUri);
+                imgview.setImageBitmap(bitmap);
+            }
+            catch (IOException e ){
+                e.printStackTrace();
+            }
+        }
+
+    }
     private void addLink(){
         String judul = txtJudul.getText().toString().trim();
         String link = txtLink.getText().toString().trim();
@@ -131,22 +153,6 @@ public class HalamanUtama extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode,data);
-        if(requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData()!=null){
-            FilePathUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),FilePathUri);
-                imgview.setImageBitmap(bitmap);
-            }
-            catch (IOException e ){
-                e.printStackTrace();
-            }
-        }
-
-    }
 
     public String GetFileExtension(Uri uri) {
 
@@ -161,19 +167,35 @@ public class HalamanUtama extends AppCompatActivity {
     public void UploadImage() {
 
        if(FilePathUri !=null){
-           progressDialog.setTitle("Gambar sedang di upload . . .");
+           final ProgressDialog progressDialog = new ProgressDialog(this);
+           progressDialog.setTitle("Uploading....");
            progressDialog.show();
-           StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." +  GetFileExtension(FilePathUri));
-           storageReference2.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
-               @Override
-               public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+           StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+           ref.putFile(FilePathUri)
+                   .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                       @Override
+                       public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                           progressDialog.dismiss();
+                           Toast.makeText(HalamanUtama.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                       }
+                   })
+                   .addOnFailureListener(new OnFailureListener() {
+                       @Override
+                       public void onFailure(@NonNull Exception e) {
+                           progressDialog.dismiss();
+                           Toast.makeText(HalamanUtama.this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                       }
+                   })
+                   .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                       @Override
+                       public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                           double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                           progressDialog.setMessage("uploaded " + (int)progress+"%");
+                       }
+                   });
 
-                   progressDialog.dismiss();
-                   Toast.makeText(getApplicationContext(),"Gambar Sukses Di Upload", Toast.LENGTH_LONG).show();
-
-               }
-           });
        }
     }
+
 }
