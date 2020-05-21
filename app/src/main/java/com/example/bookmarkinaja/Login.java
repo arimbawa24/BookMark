@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bookmarkinaja.ui.fragment.TabHome;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,6 +30,7 @@ public class Login extends AppCompatActivity {
     EditText pass;
     FirebaseAuth mAuth;
     DatabaseReference databaseUser;
+    SharedPreferences pref ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class Login extends AppCompatActivity {
         String cek = preferences.getString("ingat","");
 
         if(cek.equals("true")){
-            Intent intent = new Intent(Login.this, HalamanUtama.class);
+            Intent intent = new Intent(Login.this, MainActivity.class);
             startActivity(intent);
             databaseUser = FirebaseDatabase.getInstance().getReference("users");
         }
@@ -70,7 +72,7 @@ public class Login extends AppCompatActivity {
 
                         if(task.isSuccessful()){
                             Log.d(TAG, "Loginberhasil");
-                            Intent intent = new Intent(Login.this, HalamanUtama.class);
+                            Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
                             SharedPreferences preferen = getSharedPreferences("masuk",MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferen.edit();
