@@ -7,4 +7,8 @@
         <item>Bahasa Indonesia</item>
         <item>Sejarah</item>
     </array>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="Home">Tab 1</string>
+    <string name="Data">Tab 2</string>
+    <string name="Settings">Tab 2</string>
 </resources>
