@@ -62,7 +62,7 @@ public class HalamanUtama extends AppCompatActivity {
     int Image_Request_Code = 7;
     private final int PICK_IMAGE_REQUEST = 71;
     ProgressDialog progressDialog ;
-    Button btnbrowse, btnupload;
+    Button btnbrowse;
 
     DatabaseReference databasebook;
 
@@ -75,7 +75,7 @@ public class HalamanUtama extends AppCompatActivity {
         storageReference = storage.getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         btnbrowse = (Button)findViewById(R.id.btnbrowse);
-        btnupload= (Button)findViewById(R.id.btnupload);
+       // btnupload= (Button)findViewById(R.id.btnupload);
 
         imgview = (ImageView)findViewById(R.id.image_view);
         progressDialog = new ProgressDialog(HalamanUtama.this);
@@ -93,17 +93,13 @@ public class HalamanUtama extends AppCompatActivity {
                   pilihGambar();
     }
 });
-        btnupload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UploadImage();
-            }
-        });
+
 
 
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UploadImage();
                 addLink();
 
             }
