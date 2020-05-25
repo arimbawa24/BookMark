@@ -165,7 +165,7 @@ public class HalamanUtama extends AppCompatActivity {
        if(FilePathUri !=null){
            final ProgressDialog progressDialog = new ProgressDialog(this);
            progressDialog.setTitle("Uploading....");
-           progressDialog.show();
+           progressDialog.show();   
 
            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
            ref.putFile(FilePathUri)
