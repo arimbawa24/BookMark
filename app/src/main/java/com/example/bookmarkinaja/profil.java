@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,13 +20,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class profil extends AppCompatActivity {
-    private TextView textPassword,textEmail;
+    private TextView textPassword1,textEmail1;
     private FirebaseDatabase database;
-    private DatabaseReference userRef;
-    private  static final String USERS = "users";
-    private Button btnBack;
-    String email;
-
+    private DatabaseReference mDatabase;
+    private static final String USERS = "users";
+    Button btnBack;
+    private String email;
+    private String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,41 +34,41 @@ public class profil extends AppCompatActivity {
         setContentView(R.layout.activity_profil);
 
         Intent intent = getIntent();
-         email = intent.getStringExtra("email");
+        email = intent.getStringExtra("email");
 
-        textPassword = findViewById(R.id.textPassword);
-        textEmail = findViewById(R.id.textEmail);
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = rootRef.child(USERS);
+        Log.v("USERID", userRef.getKey());
+
+        textPassword1 = findViewById(R.id.textPassword);
+        textEmail1 = findViewById(R.id.textEmail);
         btnBack = findViewById(R.id.btnBack);
-        database = FirebaseDatabase.getInstance();
-        userRef = database.getReference(USERS);
 
         userRef.addValueEventListener(new ValueEventListener() {
+            String vemail, vpassword;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     if(ds.child("email").getValue().equals(email)){
-                        textEmail.setText(ds.child("email").getValue(String.class));
-                        textPassword.setText(ds.child("password").getValue(String.class));
+                        vemail = ds.child("email").getValue(String.class);
+                        vpassword = ds.child("password").getValue(String.class);
+                        break;
                     }
                 }
+                textEmail1.setText(vemail);
+                textPassword1.setText(vpassword);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.w("Failed to read value.", databaseError.toException());
             }
         });
-
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(profil.this,  Fragment.class);
+                Intent intent = new Intent(profil.this,Fragment.class);
                 startActivity(intent);
             }
         });
-
-
-
-
     }
 }
