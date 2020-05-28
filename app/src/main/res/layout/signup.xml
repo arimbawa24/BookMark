@@ -8,7 +8,7 @@
     tools:context=".Login">
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -67,6 +67,7 @@
         android:layout_height="53dp"
         android:background="@drawable/button"
         android:text="Sign Up"
+        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
