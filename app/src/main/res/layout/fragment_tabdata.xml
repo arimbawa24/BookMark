@@ -5,12 +5,16 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".ui.fragment.TabData">
 
-    <TextView
-        android:id="@+id/section_label2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data" />
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="219dp"
+        android:layout_height="60dp"
+        android:background="@drawable/button"
+        android:text="LIHAT DATA"
+        android:textColor="#fff"
+        android:textSize="20dp" />
 
 </RelativeLayout>
