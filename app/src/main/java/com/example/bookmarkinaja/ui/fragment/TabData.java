@@ -7,32 +7,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
+
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.example.bookmarkinaja.Data;
-import com.example.bookmarkinaja.HalamanUtama;
 import com.example.bookmarkinaja.R;
+
 
 public class TabData extends Fragment {
 
-    private Button btnView;
 
-    @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_tabdata, container, false);
-        btnView = root.findViewById(R.id.btnView);
-        btnView.setOnClickListener(new View.OnClickListener() {
+    private  Button lihat;
+
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntancesState){
+
+        View view = inflater.inflate(R.layout.fragment_tabdata,container,false);
+
+        lihat = view.findViewById(R.id.btnView);
+
+
+        lihat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Data.class);
-                startActivity(i);
-                getActivity().finish();
+                Intent intent = new Intent(getContext(),Data.class);
+                startActivity(intent);
+
             }
         });
-        return root;
+
+        return view;
     }
 }

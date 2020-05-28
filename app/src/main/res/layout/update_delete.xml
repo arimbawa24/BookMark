@@ -3,20 +3,33 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
-        android:id="@+id/jenis_txtView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:id="@+id/textjudul"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email" />
-    <TextView
-        android:id="@+id/judul_txtView"
+        android:text="TextView" />
+
+    <EditText
+        android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email" />
-    <TextView
-        android:id="@+id/link_txtView"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btn_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email" />
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+
+
 </LinearLayout>
