@@ -1,17 +1,17 @@
 package com.example.bookmarkinaja;
 
-public class book {
+public class Book {
 
-    String bookId;
-    String bookJudul;
-    String bookLink;
-    String bookJenis;
+    private String bookId;
+    private String bookJudul;
+    private String bookLink;
+    private String bookJenis;
 
-    public book(){
+    public Book(){
 
     }
 
-    public book(String bookId, String bookJudul, String bookLink, String bookJenis) {
+    public Book(String bookId, String bookJudul, String bookLink, String bookJenis) {
         this.bookId = bookId;
         this.bookJudul = bookJudul;
         this.bookLink = bookLink;

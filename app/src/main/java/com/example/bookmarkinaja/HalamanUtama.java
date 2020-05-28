@@ -1,7 +1,6 @@
 package com.example.bookmarkinaja;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -14,25 +13,12 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.webkit.WebChromeClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.os.Bundle;
-import android.view.View;
-import android.webkit.MimeTypeMap;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -80,7 +66,7 @@ public class HalamanUtama extends AppCompatActivity {
         imgview = (ImageView)findViewById(R.id.image_view);
         progressDialog = new ProgressDialog(HalamanUtama.this);
 
-        databasebook = FirebaseDatabase.getInstance().getReference("book");
+        databasebook = FirebaseDatabase.getInstance().getReference("Book");
         txtJudul = (EditText) findViewById(R.id.txtJudul);
         txtLink = ( EditText) findViewById(R.id.txtLink);
         spinnerku = (Spinner) findViewById(R.id.spinnerku);
@@ -137,7 +123,7 @@ public class HalamanUtama extends AppCompatActivity {
         if(!TextUtils.isEmpty(judul)){
             String id =  databasebook.push().getKey();
 
-            book Book = new book(id, judul, link,spinner);
+            Book Book = new Book(id, judul, link,spinner);
 
             databasebook.child(id).setValue(Book);
 
