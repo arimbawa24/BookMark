@@ -74,6 +74,20 @@
         app:layout_constraintVertical_bias="0.766" />
 
     <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="44dp"
+        android:layout_height="79dp"
+        android:background="#00FFF7F7"
+        android:foregroundGravity="center"
+        android:src="@drawable/ic_drop_down"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.28" />
+
+    <ImageView
         android:id="@+id/image_view"
         android:layout_width="280dp"
         android:layout_height="223dp"

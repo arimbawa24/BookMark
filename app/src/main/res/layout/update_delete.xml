@@ -3,47 +3,55 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/textJenisaja"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="#fff"/>
 
     <EditText
         android:id="@+id/editJenis"
-        android:hint="Jenis Baru"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
+        android:background="@drawable/edit"
         android:ems="10"
-        android:gravity="start|top"
+        android:gravity="start|center"
+        android:hint="Link Baru"
         android:inputType="textMultiLine" />
 
     <EditText
         android:id="@+id/editJudul"
-        android:hint="Judul Baru"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="41dp"
+        android:background="@drawable/edit"
         android:ems="10"
-        android:gravity="start|top"
+        android:gravity="start|center"
+        android:hint="Judul Baru"
         android:inputType="textMultiLine" />
 
     <Spinner
         android:id="@+id/spinnernew"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/Jenis"
-        />
+        android:layout_height="43dp"
+        android:entries="@array/Jenis" />
 
     <Button
         android:id="@+id/btnUpdate"
-        android:layout_width="match_parent"
+        android:layout_width="222dp"
         android:layout_height="wrap_content"
-        android:text="Update" />
+        android:layout_gravity="center"
+        android:background="@drawable/edit"
+        android:text="Update"
+        android:textColor="#4CAF50" />
 
     <Button
         android:id="@+id/btnDelete"
-        android:layout_width="match_parent"
+        android:layout_width="222dp"
         android:layout_height="wrap_content"
-        android:text="Delete" />
+        android:layout_gravity="center"
+        android:background="@drawable/edit"
+        android:text="Delete"
+        android:textColor="#FF0505" />
+
 </LinearLayout>
