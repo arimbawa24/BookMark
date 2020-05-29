@@ -3,6 +3,7 @@ package com.example.bookmarkinaja;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -35,7 +36,7 @@ public class HalamanUtama extends AppCompatActivity {
 
     EditText txtJudul;
     EditText txtLink;
-    Button btnSimpan;
+    Button btnSimpan, btnKembali;
     Spinner spinnerku;
     EditText txtdata ;
 
@@ -71,7 +72,15 @@ public class HalamanUtama extends AppCompatActivity {
         txtLink = ( EditText) findViewById(R.id.txtLink);
         spinnerku = (Spinner) findViewById(R.id.spinnerku);
         btnSimpan = (Button) findViewById(R.id.btnSimpan);
+        btnKembali = (Button) findViewById(R.id.btnKembali);
 
+        btnKembali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HalamanUtama.this, Fragment.class);
+                startActivity(intent);
+            }
+        });
 
           btnbrowse.setOnClickListener(new View.OnClickListener() {
               @Override
