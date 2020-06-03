@@ -20,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.bookmarkinaja.ui.fragment.SectionsPagerAdapter;
+import com.example.bookmarkinaja.ui.fragment.TabData;
+import com.example.bookmarkinaja.ui.fragment.TabHome;
+import com.example.bookmarkinaja.ui.fragment.TabSettings;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -67,7 +71,7 @@ public class HalamanUtama extends AppCompatActivity {
         imgview = (ImageView)findViewById(R.id.image_view);
         progressDialog = new ProgressDialog(HalamanUtama.this);
 
-        databasebook = FirebaseDatabase.getInstance().getReference("Book");
+        databasebook = FirebaseDatabase.getInstance().getReference("book");
         txtJudul = (EditText) findViewById(R.id.txtJudul);
         txtLink = ( EditText) findViewById(R.id.txtLink);
         spinnerku = (Spinner) findViewById(R.id.spinnerku);
@@ -77,8 +81,9 @@ public class HalamanUtama extends AppCompatActivity {
         btnKembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HalamanUtama.this, Fragment.class);
+                Intent intent = new Intent(HalamanUtama.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

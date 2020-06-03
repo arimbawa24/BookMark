@@ -66,8 +66,9 @@ public class profil extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(profil.this,Fragment.class);
+                Intent intent = new Intent(profil.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
