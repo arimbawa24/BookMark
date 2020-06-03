@@ -2,10 +2,10 @@ package com.example.bookmarkinaja;
 
 public class Book {
 
-    private String bookId;
-    private String bookJudul;
-    private String bookLink;
-    private String bookJenis;
+    public String bookId;
+    public String bookJudul;
+    public String bookLink;
+    public String bookJenis;
 
     public Book(){
 

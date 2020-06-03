@@ -12,12 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".profil"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Web"></activity>
         <activity android:name=".HalamanUtama" />
         <activity android:name=".Data"/>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".Login">
 
             <intent-filter>

@@ -20,10 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -100,6 +97,7 @@ public class Data extends AppCompatActivity {
         final Spinner spinnerbaru = dialogView.findViewById(R.id.spinnernew);
         final Button update = dialogView.findViewById(R.id.btnUpdate);
         final Button delete = dialogView.findViewById(R.id.btnDelete);
+        final Button link = dialogView.findViewById(R.id.btnLink);
 
 
         builder.setTitle("Update data" + bookJenis);
@@ -125,6 +123,14 @@ public class Data extends AppCompatActivity {
             }
         });
 
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Data.this, Web.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 

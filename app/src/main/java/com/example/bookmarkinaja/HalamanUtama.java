@@ -20,10 +20,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.bookmarkinaja.ui.fragment.SectionsPagerAdapter;
-import com.example.bookmarkinaja.ui.fragment.TabData;
-import com.example.bookmarkinaja.ui.fragment.TabHome;
-import com.example.bookmarkinaja.ui.fragment.TabSettings;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;

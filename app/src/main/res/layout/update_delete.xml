@@ -16,7 +16,7 @@
         android:background="@drawable/edit"
         android:ems="10"
         android:gravity="start|center"
-        android:hint="Link Baru"
+        android:hint="Judul Baru"
         android:inputType="textMultiLine" />
 
     <EditText
@@ -26,7 +26,7 @@
         android:background="@drawable/edit"
         android:ems="10"
         android:gravity="start|center"
-        android:hint="Judul Baru"
+        android:hint="Link Baru"
         android:inputType="textMultiLine" />
 
     <Spinner
@@ -52,5 +52,14 @@
         android:background="@drawable/edit"
         android:text="Delete"
         android:textColor="#FF0505" />
+    <Button
+        android:id="@+id/btnLink"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/edit"
+        android:text="Go to Website"
+        android:textColor="#4CAF50" />
+
 
 </LinearLayout>
