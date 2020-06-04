@@ -149,8 +149,6 @@ public class Data extends AppCompatActivity {
             }
         });
 
-
-
     }
     private boolean updateData(String id, String jenis, String judul, String spinner){
 
