@@ -3,6 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:queryHint="Search your bookmark..." />
+
     <ListView
         android:id="@+id/ListBook"
         android:layout_width="match_parent"

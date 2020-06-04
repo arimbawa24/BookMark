@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,15 +30,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Data extends AppCompatActivity {
 
-
     DatabaseReference databasebook;
     ListView listViewBook;
     List<Book>bookList;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class Data extends AppCompatActivity {
         setContentView(R.layout.activity_data);
         databasebook = FirebaseDatabase.getInstance().getReference("book");
         listViewBook = findViewById(R.id.ListBook);
+        searchView = findViewById(R.id.searchView);
         bookList = new ArrayList<>();
 
         listViewBook.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -52,7 +57,7 @@ public class Data extends AppCompatActivity {
 
                 Book book = bookList.get(position);
 
-                showUpdateDelet(book.getBookId(),book.getBookJenis());
+                showUpdateDelet(book.getBookId(),book.getBookJenis(),book.getBookLink());
 
                 return false;
             }
@@ -83,7 +88,7 @@ public class Data extends AppCompatActivity {
     });
     }
 
-    private void showUpdateDelet(final String bookId, String bookJenis){
+    private void showUpdateDelet(final String bookId, final String bookJenis, final String bookLink){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -98,6 +103,7 @@ public class Data extends AppCompatActivity {
         final Button update = dialogView.findViewById(R.id.btnUpdate);
         final Button delete = dialogView.findViewById(R.id.btnDelete);
         final Button link = dialogView.findViewById(R.id.btnLink);
+        final Button share = dialogView.findViewById(R.id.btnShare);
 
 
         builder.setTitle("Update data" + bookJenis);
@@ -132,6 +138,16 @@ public class Data extends AppCompatActivity {
             }
         });
 
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String shareBody = bookLink;
+                intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(intent,"ShareVia"));
+            }
+        });
 
 
 
