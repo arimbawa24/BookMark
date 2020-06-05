@@ -165,8 +165,8 @@ public class Data extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String shareBody1 = bookLink;
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(shareBody1));
-                startActivity(Intent.createChooser(intent,"Open Via"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + shareBody1));
+                startActivity(intent);
             }
         });
 
