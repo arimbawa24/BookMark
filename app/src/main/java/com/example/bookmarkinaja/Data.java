@@ -157,15 +157,16 @@ public class Data extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deleteData(bookId);
+                finish();
             }
         });
 
         link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Data.this, Web.class);
-                startActivity(intent);
-                finish();
+                String shareBody1 = bookLink;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(shareBody1));
+                startActivity(Intent.createChooser(intent,"Open Via"));
             }
         });
 

@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/edit2">
 
     <TextView
         android:id="@+id/jenis_txtView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:text="Email" />
+
     <TextView
         android:id="@+id/judul_txtView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="italic"
         android:text="Email" />
+
     <TextView
         android:id="@+id/link_txtView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#3F51B5"
         android:text="Email" />
 
 </LinearLayout>

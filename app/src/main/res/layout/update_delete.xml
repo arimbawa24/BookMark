@@ -45,14 +45,6 @@
         android:textColor="#4CAF50" />
 
     <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="222dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/edit"
-        android:text="Delete"
-        android:textColor="#FF0505" />
-    <Button
         android:id="@+id/btnLink"
         android:layout_width="222dp"
         android:layout_height="wrap_content"
@@ -67,6 +59,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/edit"
-        android:text="Share It"
+        android:text="Share"
         android:textColor="#4CAF50" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/edit"
+        android:text="Delete"
+        android:textColor="#FF0505" />
 </LinearLayout>

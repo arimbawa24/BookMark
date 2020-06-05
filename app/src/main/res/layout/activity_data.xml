@@ -7,7 +7,7 @@
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="76dp"
-        android:queryHint="Search your bookmark..." />
+        android:queryHint="Search by Category" />
 
     <ListView
         android:id="@+id/ListBook"
