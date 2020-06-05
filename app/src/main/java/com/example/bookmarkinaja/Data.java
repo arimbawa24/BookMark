@@ -66,27 +66,58 @@ public class Data extends AppCompatActivity {
     }
     @Override
     protected void onStart() {
-    super.onStart();
+        super.onStart();
+        if (databasebook != null) {
+            databasebook.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        bookList = new ArrayList<>();
+                        for (DataSnapshot booksnapshoot : dataSnapshot.getChildren()) {
+                            bookList.add(booksnapshoot.getValue(Book.class));
+                        }
+                        DataList adpter = new DataList(Data.this, bookList);
+                        listViewBook.setAdapter(adpter);
+                    }
+                }
 
-    databasebook.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                bookList.clear();
-            for (DataSnapshot booksnapshoot : dataSnapshot.getChildren()){
-                Book book = booksnapshoot.getValue(Book.class);
-                bookList.add(book);
+                }
+            });
+        }
+            if (searchView != null){
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        search(s);
+                        return true;
+                    }
+                });
             }
-            DataList adpter = new DataList(Data.this, bookList);
-            listViewBook.setAdapter(adpter);
-        }
 
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    });
     }
+
+
+    private void search(String str){
+
+        ArrayList<Book> myList =  new ArrayList<>();
+        for(Book object : bookList){
+            if (object.getBookJenis().toLowerCase().contains(str.toLowerCase())){
+                myList.add(object);
+            }
+        }
+        DataList adpter = new DataList(Data.this, myList);
+        listViewBook.setAdapter(adpter);
+
+    }
+
 
     private void showUpdateDelet(final String bookId, final String bookJenis, final String bookLink){
 
