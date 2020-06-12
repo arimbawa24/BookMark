@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
         if(cek.equals("true")){
             Intent intent = new Intent(Login.this, MainActivity.class);
             startActivity(intent);
-            databaseUser = FirebaseDatabase.getInstance().getReference("users");
+            databaseUser = FirebaseDatabase.getInstance().getReference("users").child("");
         }
 
         super.onCreate(savedInstanceState);
