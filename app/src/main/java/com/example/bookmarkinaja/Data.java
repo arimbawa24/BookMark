@@ -24,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Data extends AppCompatActivity {
 
@@ -41,7 +41,6 @@ public class Data extends AppCompatActivity {
     ListView listViewBook;
     List<Book>bookList;
     SearchView searchView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,20 +88,20 @@ public class Data extends AppCompatActivity {
                 }
             });
         }
-            if (searchView != null){
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
+        if (searchView != null){
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        search(s);
-                        return true;
-                    }
-                });
-            }
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    search(s);
+                    return true;
+                }
+            });
+        }
 
     }
 
@@ -150,8 +149,8 @@ public class Data extends AppCompatActivity {
                 String judul = judulbaru.getText().toString().trim();
                 String spinner = spinnerbaru.getSelectedItem().toString();
 
-                updateData(bookId, jenis,judul,spinner);
-                alertDialog.dismiss();
+                updateData(bookId, jenis,judul,spinner,alertDialog);
+
             }
         });
 
@@ -184,18 +183,34 @@ public class Data extends AppCompatActivity {
         });
 
     }
-    private boolean updateData(String id, String jenis, String judul, String spinner){
+    private void updateData(final String id, final String jenis, final String judul, final String spinner, final AlertDialog alertDialog){
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book").child(id);
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("book").child(id);
 
-        Book book = new Book(id,jenis,judul,spinner);
+        databaseReference1.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user value
+                        Map<String, String> dataAwal = (Map<String, String>) dataSnapshot.getValue();
+                        String gambar = dataAwal.get("bookGambar");
+                        //user.email now has your email value
+                        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("book").child(id);
 
-        databaseReference.setValue(book);
+                        Book book = new Book(id,jenis,judul,spinner,gambar);
 
-        Toast.makeText(this, "Data Berhasil di ganti", Toast.LENGTH_LONG).show();
+                        databaseReference2.setValue(book);
 
+                        Toast.makeText(Data.this, "Data Berhasil di ganti", Toast.LENGTH_LONG).show();
 
-        return true;
+                        alertDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
     }
 

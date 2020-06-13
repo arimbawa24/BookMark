@@ -75,12 +75,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.576" />
 
+
     <Button
-        android:id="@+id/btnBack"
+        android:id="@+id/Updatebtn"
         android:layout_width="328dp"
         android:layout_height="53dp"
         android:background="@drawable/button"
-        android:hint="Back"
+        android:hint="Update"
         android:textColorHint="#fff"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,5 +92,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.92" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="132dp"
+        android:layout_height="38dp"
+        android:background="@drawable/button"
+        android:hint="Back"
+        android:textColorHint="#fff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.721" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

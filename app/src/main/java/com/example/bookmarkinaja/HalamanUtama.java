@@ -21,13 +21,17 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.UUID;
@@ -40,6 +44,8 @@ public class HalamanUtama extends AppCompatActivity {
     Button btnSimpan, btnKembali;
     Spinner spinnerku;
     EditText txtdata ;
+
+    private StorageTask taskChecker;
 
 
     ImageView imgview;
@@ -59,11 +65,12 @@ public class HalamanUtama extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_halaman_utama);
 
+
         storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        storageReference = storage.getReference("images/" + UUID.randomUUID().toString());
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         btnbrowse = (Button)findViewById(R.id.btnbrowse);
-       // btnupload= (Button)findViewById(R.id.btnupload);
+        // btnupload= (Button)findViewById(R.id.btnupload);
 
         imgview = (ImageView)findViewById(R.id.image_view);
         progressDialog = new ProgressDialog(HalamanUtama.this);
@@ -84,31 +91,32 @@ public class HalamanUtama extends AppCompatActivity {
             }
         });
 
-          btnbrowse.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  pilihGambar();
-    }
-});
+        btnbrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFileChooser();
+            }
+        });
 
 
 
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UploadImage();
-                addLink();
+                uploadFile();
 
             }
         });
     }
 
-    private void pilihGambar(){
+    private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -126,69 +134,71 @@ public class HalamanUtama extends AppCompatActivity {
         }
 
     }
-    private void addLink(){
-        String judul = txtJudul.getText().toString().trim();
-        String link = txtLink.getText().toString().trim();
-        String spinner = spinnerku.getSelectedItem().toString();
 
-        if(!TextUtils.isEmpty(judul)){
-            String id =  databasebook.push().getKey();
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
 
-            Book Book = new Book(id, judul, link,spinner);
+    //upload file
+    private void uploadFile() {
+        if (FilePathUri != null) {
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() //bisa juga mStorageRef.child("uploads/" + System.currentTimeMillis()
+                    + "." + getFileExtension(FilePathUri));
 
-            databasebook.child(id).setValue(Book);
+            final UploadTask uploadTask = fileReference.putFile(FilePathUri);
+            taskChecker = uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-            Toast.makeText(this,"Bookmark telah ditambah", Toast.LENGTH_LONG).show();
+                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
 
+                            }
+                            // Continue with the task to get the download URL
+
+                            //Toast.makeText(ProfileTestActivity.this, "Upload Berhasil", Toast.LENGTH_LONG).show();
+                            return fileReference.getDownloadUrl();
+
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                //lokasi file disimpan di firebase
+                                String namaFileMeta = task.getResult().toString();
+
+                                String judul = txtJudul.getText().toString().trim();
+                                String link = txtLink.getText().toString().trim();
+                                String spinner = spinnerku.getSelectedItem().toString();
+                                String gambar = namaFileMeta;
+
+                                if(!TextUtils.isEmpty(judul)){
+                                    String id =  databasebook.push().getKey();
+
+                                    Book Book = new Book(id, judul, link,spinner,gambar);
+
+                                    databasebook.child(id).setValue(Book);
+
+                                    Toast.makeText(HalamanUtama.this, "Bookmark telah ditambah", Toast.LENGTH_LONG).show();
+
+                                } else {
+                                    Toast.makeText(HalamanUtama.this, "Masukan Judul terlebih dahulu", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                    });
+
+                }
+            });
+            //
         } else {
-            Toast.makeText(this, " Masukan Judul terlebih dahulu ", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No File Selected", Toast.LENGTH_SHORT).show();
         }
-
-    }
-
-
-    public String GetFileExtension(Uri uri) {
-
-
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-
-
-    }
-
-    public void UploadImage() {
-
-       if(FilePathUri !=null){
-           final ProgressDialog progressDialog = new ProgressDialog(this);
-           progressDialog.setTitle("Uploading....");
-           progressDialog.show();   
-
-           StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-           ref.putFile(FilePathUri)
-                   .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                       @Override
-                       public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           progressDialog.dismiss();
-                           Toast.makeText(HalamanUtama.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                       }
-                   })
-                   .addOnFailureListener(new OnFailureListener() {
-                       @Override
-                       public void onFailure(@NonNull Exception e) {
-                           progressDialog.dismiss();
-                           Toast.makeText(HalamanUtama.this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
-                       }
-                   })
-                   .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                       @Override
-                       public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                           double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                           progressDialog.setMessage("uploaded " + (int)progress+"%");
-                       }
-                   });
-
-       }
     }
 
 }
