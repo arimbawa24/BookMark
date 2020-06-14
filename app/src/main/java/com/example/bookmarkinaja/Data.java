@@ -142,6 +142,7 @@ public class Data extends AppCompatActivity {
 
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,6 +184,10 @@ public class Data extends AppCompatActivity {
         });
 
     }
+
+
+
+
     private void updateData(final String id, final String jenis, final String judul, final String spinner, final AlertDialog alertDialog){
 
         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("book").child(id);
