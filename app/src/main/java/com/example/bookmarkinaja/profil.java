@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +29,8 @@ public class profil extends AppCompatActivity {
     Button btnBack;
     private String email;
     private String userid;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,33 +40,20 @@ public class profil extends AppCompatActivity {
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
 
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference userRef = rootRef.child(USERS);
-        Log.v("USERID", userRef.getKey());
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         textPassword1 = findViewById(R.id.textPassword);
         textEmail1 = findViewById(R.id.textEmail);
         btnBack = findViewById(R.id.btnBack);
 
-        userRef.addValueEventListener(new ValueEventListener() {
-            String vemail, vpassword;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    if(ds.child("email").getValue().equals(email)){
-                        vemail = ds.child("email").getValue(String.class);
-                        vpassword = ds.child("password").getValue(String.class);
-                        break;
-                    }
-                }
-                textEmail1.setText(vemail);
-                textPassword1.setText(vpassword);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("Failed to read value.", databaseError.toException());
-            }
-        });
+        textEmail1.setText(firebaseUser.getEmail());
+
+
+
+
+
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

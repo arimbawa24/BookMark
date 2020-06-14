@@ -81,7 +81,7 @@
         android:layout_width="328dp"
         android:layout_height="53dp"
         android:background="@drawable/button"
-        android:hint="Update"
+        android:hint="Edit Data"
         android:textColorHint="#fff"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
