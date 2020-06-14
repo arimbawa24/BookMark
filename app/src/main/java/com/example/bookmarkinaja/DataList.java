@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -35,12 +39,18 @@ public class DataList extends ArrayAdapter<Book> {
         TextView jenisBuku = listViewItem.findViewById(R.id.jenis_txtView);
         TextView judulBuku = listViewItem.findViewById(R.id.judul_txtView);
         TextView link = listViewItem.findViewById(R.id.link_txtView);
+        ImageView imageView = listViewItem.findViewById(R.id.gambarData);
 
         Book book = bookList.get(position);
 
         jenisBuku.setText(book.getBookJenis());
         judulBuku.setText(book.getBookJudul());
         link.setText(book.getBookLink());
+        Glide
+                .with(contex) // get context of Fragment
+                .load(book.bookGambar)
+                .centerCrop()
+                .into(imageView);
 
         return listViewItem;
 

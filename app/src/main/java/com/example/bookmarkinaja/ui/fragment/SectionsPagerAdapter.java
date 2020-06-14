@@ -23,19 +23,19 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-      switch (position){
-          case 0 :
-              TabHome tab1 = new TabHome();
-          return tab1;
-          case 1 :
-              TabData tab2 = new TabData();
-              return tab2;
-          case 2 :
-              TabSettings tab3 = new TabSettings();
-              return tab3;
-          default:
-              return null;
-      }
+        switch (position){
+            case 0 :
+                TabHome tab1 = new TabHome();
+                return tab1;
+            case 1 :
+                TabData tab2 = new TabData();
+                return tab2;
+            case 2 :
+                TabSettings tab3 = new TabSettings();
+                return tab3;
+            default:
+                return null;
+        }
     }
 
     @Nullable
@@ -52,7 +52,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
                 return "SETTINGS";
         }
-                return null;
+        return null;
     }
 
     @Override
