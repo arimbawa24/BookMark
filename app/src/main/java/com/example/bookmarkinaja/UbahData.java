@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +26,8 @@ public class UbahData extends AppCompatActivity {
     private DatabaseReference database;
     EditText emailbru, passbru;
     Button simpan, kembali;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
 
 
     @Override
@@ -57,36 +61,19 @@ public class UbahData extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     private void updateData(final String email, final String password ){
 
-        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("users");
 
-        databaseReference1.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get user value
-                        Map<String, String> dataAwal = (Map<String, String>) dataSnapshot.getValue();
-                        //user.email now has your email value
-                        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("users");
+
+                        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid());
 
                         User user = new User(email,password);
 
                         databaseReference2.setValue(user);
 
-                        Toast.makeText(UbahData.this, "Data Berhasil di ganti", Toast.LENGTH_LONG).show();
 
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
 
     }
 

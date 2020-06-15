@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.material.tabs.TabLayout;
@@ -22,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class profil extends AppCompatActivity {
     private TextView textPassword1,textEmail1;
@@ -41,10 +44,6 @@ public class profil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
-//        Intent intent = getIntent();
-//        email = intent.getStringExtra("email");
-
-
 
         textPassword1 = findViewById(R.id.textPassword);
         textEmail1 = findViewById(R.id.textEmail);
@@ -56,7 +55,24 @@ public class profil extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference();
 
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid());
 
+        databaseReference1.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        Map<String, String> dataAwal = (Map<String, String>) dataSnapshot.getValue();
+                        textEmail1.setText(dataAwal.get("email"));
+                        textPassword1.setText(dataAwal.get("password"));
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
 
 
