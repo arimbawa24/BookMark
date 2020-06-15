@@ -22,7 +22,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Map;
 
@@ -30,7 +32,7 @@ public class profil extends AppCompatActivity {
     private TextView textPassword1,textEmail1;
     private FirebaseDatabase database;
     private DatabaseReference reference;
-    private static final String USERS = "users";
+
     Button btnBack, btnUpdate ;
     private String userid;
     FirebaseAuth firebaseAuth;
@@ -53,7 +55,31 @@ public class profil extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference();
+        reference = database.getReference("users");
+
+        Query  query = reference.orderByChild("email").equalTo(firebaseUser.getEmail());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    String email = "" + ds.child("email").getValue();
+                    String password = "" + ds.child("password").getValue();
+
+                    textEmail1.setText(email);
+                    textPassword1.setText(password);
+                    try {
+                    }
+
+                    catch (Exception e){
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid());
 
